@@ -9,17 +9,20 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <jersey.version>2.17</jersey.version>
-        <mySql.version>8.0.13</mySql.version>
+        <mySql.version>8.0.15</mySql.version>
         <javax.version>2.1</javax.version>
         <jackson.version>2.3.0</jackson.version>
         <jsonSimple.version>1.1</jsonSimple.version>
+        <log4j.version>1.2.17</log4j.version>
+        <junit.version>4.11</junit.version>
+        <json.version>20180813</json.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -43,7 +46,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20180813</version>
+            <version>${json.version}</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -59,6 +62,11 @@
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 
