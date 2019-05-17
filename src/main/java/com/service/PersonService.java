@@ -5,11 +5,11 @@ import com.model.Person;
 import java.util.List;
 
 public interface PersonService {
-    Person findPerson(int id);//private olacaka
+    Person findPerson(int id) throws Exception;//private olacaka
 
-    void createPerson(Person person);
+    void createPerson(Person person) throws Exception;
 
-    void updatePerson(Person person);
+    void updatePerson(Person person) throws Exception;
 
-    void deletePerson(int id);
+    void deletePerson(int id) throws Exception;
 }

@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.model.Person;
+import com.mysql.cj.jdbc.exceptions.MySQLStatementCancelledException;
 import com.service.PersonService;
 import com.service.PersonServiceImpl;
 
@@ -17,8 +18,12 @@ public class PersonController {
     @Path("/savePerson")
     @Produces(MediaType.APPLICATION_JSON)//gelen jsondata modelle maplenecek altta tek tek ıd yollanmayacak
     public Response savePerson(@BeanParam Person person) {
-        personService.createPerson(person);
-        return Response.status(200).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person eklenmiştir.").build();
+        try {
+            personService.createPerson(person);
+            return Response.status(200).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person eklenmiştir.").build();
+        } catch (Exception e) {
+            return Response.status(200).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person eklenememiştir.").build();
+        }
     }
 
     @GET
@@ -26,9 +31,13 @@ public class PersonController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getPersonById(@QueryParam("id") int personId) {
-        Person personList = personService.findPerson(personId);
-        System.out.println();
-        return Response.status(200).entity(personList).build();
+        Person personList = null;
+        try {
+            personList = personService.findPerson(personId);
+            return Response.status(200).entity(personList).build();
+        } catch (Exception e) {
+            return Response.status(200).entity("istenilen işlem gercekleştirilemedi").build();
+        }
     }
 
     @PUT
@@ -36,8 +45,13 @@ public class PersonController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePerson(@BeanParam Person person) {
-        personService.updatePerson(person);
-        return Response.status(200).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person güncellenmistir.").build();
+        try {
+            personService.updatePerson(person);
+            return Response.status(200).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person güncellenmistir.").build();
+        } catch (Exception e) {
+            return Response.status(200).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person güncellenememiştir.").build();
+        }
+
     }
 
     @DELETE

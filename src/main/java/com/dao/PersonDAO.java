@@ -6,11 +6,11 @@ import org.json.JSONObject;
 import java.util.List;
 
 public interface PersonDAO {
-    void savePerson(Person person);
+    void savePerson(Person person) throws Exception;
 
-    Person getPersonById(int id);
+    Person getPersonById(int id) throws Exception;
 
-    void updatePerson(Person person);
+    void updatePerson(Person person) throws Exception;
 
-    void deletePersonById(int id);
+    void deletePersonById(int id) throws Exception;
 }
