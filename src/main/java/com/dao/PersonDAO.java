@@ -1,12 +1,16 @@
 package com.dao;
+
+import com.model.Person;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public interface PersonDAO {
-    String savePerson(JSONObject jsonObject);
+    void savePerson(Person person);
 
-    String getPersonById(JSONObject jsonObject);
+    Person getPersonById(int id);
 
-    String updatePerson(JSONObject jsonObject);
+    void updatePerson(Person person);
 
-    String deletePersonById(JSONObject jsonObject);
+    void deletePersonById(int id);
 }

@@ -2,12 +2,10 @@ package com.dao;
 
 import com.model.Person;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
-import org.json.simple.JSONArray;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -16,7 +14,7 @@ public class PersonDAOImpl implements PersonDAO {
     private final String SAVE_PERSON = "INSERT INTO person(personId,personName,personSurname) VALUES(?,?,?)";
     private final String UPDATE_PERSON = "UPDATE person SET personName=?,personSurname=? WHERE personId=? ";
     private final String DELETE_PERSON = "DELETE FROM person WHERE personId=?";
-    Person person = new Person();
+    // Person person = new Person();
     Connection connection;
     //Logger logger=Logger.getLogger(PersonDAO.class);
 
@@ -59,99 +57,6 @@ public class PersonDAOImpl implements PersonDAO {
         return null;
     }
 
-    public void parse(String data) {
-
-        JSONObject object = new JSONObject(data);
-
-        person.setId(object.getInt("id"));
-        person.setName(object.getString("name"));
-        person.setSurname(object.getString("surname"));
-    }
-
-    public void parseId(String data) {
-
-        JSONObject object = new JSONObject(data);
-
-        person.setId(object.getInt("id"));
-        //person.setName(object.getString("name"));
-        //person.setSurname(object.getString("surname"));
-    }
-
-    public String savePerson(JSONObject jsonObject) {
-        String insertdata = jsonObject.toString();
-        parse(insertdata);
-
-        String sendString = "bir hata meydana geldi";
-        try {
-            execute(SAVE_PERSON, person.getId(), person.getName(), person.getSurname());
-            sendString = "islem basarili";
-        } catch (Exception e) {
-            //logger.warn("savePerson da hata ile karşılaşıldı.  HATA= "+e);
-            System.out.println("save person  " + e);
-        }
-
-        return sendString;
-    }
-
-    public String getPersonById(JSONObject jsonObject) {
-         String insertdata = jsonObject.toString();
-        String sendString = "getPersonById de hata bulunmaktadır.";
-         parseId(insertdata);
-        //JSONArray jsonArray = null;
-         try
-         {
-             //statement=connection.prepareStatement(selectRc);
-             ResultSet resultSet = executeQuery(GET_PERSON_ID, person.getId());
-             while(resultSet.next())
-             {
-
-                 JSONObject jsonObjectOut = new JSONObject();
-                 jsonObjectOut.put("id", resultSet.getInt("personId"));
-                 jsonObjectOut.put("name", resultSet.getString("personName"));
-                 jsonObjectOut.put("surname", resultSet.getString("personSurname"));
-                 //jsonArray.add(jsonObjectOut);//hata burada maven da
-                 sendString = jsonObjectOut.toString();
-             }
-         }catch(Exception e){
-             System.out.println("hata");
-
-             // logger.warn("getPersonById de hata ile karşılaşıldı.  HATA= "+e);
-
-         }
-
-        return sendString;
-    }
-
-    public String updatePerson(JSONObject jsonObject) {
-        String insertdata = jsonObject.toString();
-        parse(insertdata);
-
-        String sendString = "bir hata meydana geldi";
-        try {
-            execute(UPDATE_PERSON, person.getName(), person.getSurname(), person.getId());
-            sendString = "islem basarili";
-        } catch (Exception e) {
-            //logger.warn("updatePerson da hata ile karşılaşıldı.  HATA= "+e);
-            System.out.println("save person  " + e);
-        }
-        return sendString;
-    }
-
-    public String deletePersonById(JSONObject jsonObject) {
-        String insertdata = jsonObject.toString();
-        parseId(insertdata);
-
-        String sendString = "bir hata meydana geldi";
-        try {
-            execute(DELETE_PERSON, person.getId());
-            sendString = "islem basarili";
-        } catch (Exception e) {
-            //logger.warn("deletePerson da hata ile karşılaşıldı.  HATA= "+e);
-            System.out.println("delete person  " + e);
-        }
-        return sendString;
-    }
-
     private void execute(String sql, Object... queryParameters) throws SQLException, Exception {
 
         PreparedStatement ps = connection.prepareStatement(sql);
@@ -178,5 +83,55 @@ public class PersonDAOImpl implements PersonDAO {
         }
         ResultSet resultSet = ps.executeQuery();
         return resultSet;
+    }
+
+    public void savePerson(Person person) {
+        try {
+            execute(SAVE_PERSON, person.getId(), person.getName(), person.getSurname());
+            //sendString = "islem basarili";
+        } catch (Exception e) {
+            //logger.warn("savePerson da hata ile karşılaşıldı.  HATA= "+e);
+            System.out.println("save person  " + e);//loglama gelecek
+        }
+    }
+
+    public Person getPersonById(int id) {
+        try {
+            //statement=connection.prepareStatement(selectRc);
+            //List<Person> personList=null;
+            ResultSet resultSet = executeQuery(GET_PERSON_ID, id);
+            Person person = new Person();
+            while (resultSet.next()) {
+                //Person person = new Person();
+                person.setId(resultSet.getInt("personId"));
+                person.setName(resultSet.getString("personName"));
+                person.setSurname(resultSet.getString("personSurname"));
+                //personList.add(person);
+            }
+            return person;
+        } catch (Exception e) {
+            System.out.println("hata  " + e);//loglama gelecek
+        }
+        return null;
+    }
+
+    public void updatePerson(Person person) {
+        try {
+            execute(UPDATE_PERSON, person.getName(), person.getSurname(), person.getId());
+        } catch (Exception e) {
+            //logger.warn("updatePerson da hata ile karşılaşıldı.  HATA= "+e);
+            System.out.println("save person  " + e);//loglama gelecek
+        }
+
+    }
+
+    public void deletePersonById(int id) {
+        try {
+            execute(DELETE_PERSON, id);
+            //loglama olacak
+        } catch (Exception e) {
+            //logger.warn("deletePerson da hata ile karşılaşıldı.  HATA= "+e);
+            System.out.println("delete person  " + e);//loglama olacak
+        }
     }
 }
