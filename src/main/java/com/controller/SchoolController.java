@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.exception.SchoolNotFoundException;
 import com.model.School;
 import com.service.SchoolService;
 import com.service.SchoolServiceImpl;
@@ -29,14 +30,15 @@ public class SchoolController {
     @Path("/schoolCrud")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getSchoolByNo(@QueryParam("schoolNo") int schoolNo) {
+    public Response getSchoolByNo(@QueryParam("schoolNo") int schoolNo) throws SchoolNotFoundException {
         School school = null;
 
             school = schoolService.findSchool(schoolNo);
         if (school != null)
             return Response.status(200).entity(school).build();
         else
-            return Response.status(200).entity(schoolNo + "  numaralı veri bulunamamıştır").build();
+            throw new SchoolNotFoundException(schoolNo + " numaralı veri bulunamamıştır");
+        //return Response.status(200).entity(schoolNo + "  numaralı veri bulunamamıştır").build();
     }
     //GET olarak http://localhost:8090/msg/schoolService/schoolCrud?schoolNo=4
 

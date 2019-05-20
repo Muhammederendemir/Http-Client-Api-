@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.exception.PersonNotFoundException;
 import com.model.Person;
 import com.service.PersonService;
 import com.service.PersonServiceImpl;
@@ -29,14 +30,15 @@ public class PersonController {
     @Path("/personCrud")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getPersonById(@QueryParam("personId") int personId) {
+    public Response getPersonById(@QueryParam("personId") int personId) throws PersonNotFoundException {
         Person personList = null;
 
             personList = personService.findPerson(personId);
         if (personList.getName() != null)
             return Response.status(200).entity(personList).build();
         else
-            return Response.status(501).entity(personId + " numaralı Person bulunamadı").build();
+            throw new PersonNotFoundException(personId + " numaralı Person bulunamadı");
+        //  return Response.status(501).entity(personId + " numaralı Person bulunamadı").build();
 
     }
     //GET  olarak http://localhost:8090/msg/personService/personCrud?personId=4
