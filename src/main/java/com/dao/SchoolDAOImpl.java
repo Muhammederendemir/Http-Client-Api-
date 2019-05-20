@@ -1,6 +1,7 @@
 package com.dao;
 
-import com.model.Person;
+import com.model.Country;
+import com.model.School;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -8,18 +9,16 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-
-
-public class PersonDAOImpl implements PersonDAO {
-    private final String GET_PERSON_ID = "SELECT * FROM person WHERE personId=?";
-    private final String SAVE_PERSON = "INSERT INTO person(personId,personName,personSurname) VALUES(?,?,?)";
-    private final String UPDATE_PERSON = "UPDATE person SET personName=?,personSurname=? WHERE personId=? ";
-    private final String DELETE_PERSON = "DELETE FROM person WHERE personId=?";
+public class SchoolDAOImpl implements SchoolDAO {
+    private final String GET_SCHOOL_NO = "SELECT * FROM school INNER JOIN country ON school.countryId=country.countryNo WHERE school.schoolNo=?";
+    private final String SAVE_SCHOOL = "INSERT INTO school(schoolNo,schoolName,countryId) VALUES(?,?,?)";
+    private final String UPDATE_SCHOOL = "UPDATE school SET schoolName=?,countryId=? WHERE schoolNo=? ";
+    private final String DELETE_SCHOOL = "DELETE FROM school WHERE schoolNo=?";
+    private final Logger LOGGER = Logger.getLogger(SchoolDAOImpl.class);
     Connection connection;
-    private final Logger LOGGER = Logger.getLogger(PersonDAOImpl.class);
 
 
-    public PersonDAOImpl() {
+    public SchoolDAOImpl() {
         this.connection = getConnection();
     }
 
@@ -87,35 +86,37 @@ public class PersonDAOImpl implements PersonDAO {
         return resultSet;
     }
 
-    public void savePerson(Person person) throws Exception {
+    public void saveSchool(School school) throws Exception {
 
-            execute(SAVE_PERSON, person.getId(), person.getName(), person.getSurname());
+        execute(SAVE_SCHOOL, school.getSchoolNo(), school.getSchoolName(), school.getCountryNo());
         LOGGER.info("savePerson işlemi başarılı olarak çalıştı");
         //sendString = "islem basarili";
     }
 
-    public Person getPersonById(int id) throws Exception {
-            //List<Person> personList=null;
-            ResultSet resultSet = executeQuery(GET_PERSON_ID, id);
-            Person person = new Person();
-            while (resultSet.next()) {
-                //Person person = new Person();
-                person.setId(resultSet.getInt("personId"));
-                person.setName(resultSet.getString("personName"));
-                person.setSurname(resultSet.getString("personSurname"));
-                //personList.add(person);
-            }
-        LOGGER.info("personGetById işlemi başarılı olarak çalıştı");
-            return person;
+    public School getSchoolByNo(int no) throws Exception {
+        //List<Person> personList=null;
+        ResultSet resultSet = executeQuery(GET_SCHOOL_NO, no);
+        School school = new School();
+        Country country = new Country();
+        while (resultSet.next()) {
+            //Person person = new Person();
+            school.setSchoolNo(resultSet.getInt("schoolNo"));
+            school.setSchoolName(resultSet.getString("schoolName"));
+            school.setCountryNo(resultSet.getInt("countryNo"));
+            country.setCountryName(resultSet.getString("countryName"));
+            //personList.add(person);
+        }
+        LOGGER.info("schoolGetByNo işlemi başarılı olarak çalıştı");
+        return school;
     }
 
-    public void updatePerson(Person person) throws Exception {
-        execute(UPDATE_PERSON, person.getName(), person.getSurname(), person.getId());
-        LOGGER.info("upatePerson işlemi başarılı olarak çalıştı");
+    public void updateSchool(School school) throws Exception {
+        execute(UPDATE_SCHOOL, school.getSchoolName(), school.getCountryNo(), school.getSchoolNo());
+        LOGGER.info("upateSchool işlemi başarılı olarak çalıştı");
     }
 
-    public void deletePersonById(int id) throws Exception {
-            execute(DELETE_PERSON, id);
-        LOGGER.info("deletePerson işlemi başarılı olarak çalıştı");
+    public void deleteSchoolByNo(int schoolNo) throws Exception {
+        execute(DELETE_SCHOOL, schoolNo);
+        LOGGER.info("deleteSchoolByNo işlemi başarılı olarak çalıştı");
     }
 }

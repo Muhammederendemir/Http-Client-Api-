@@ -3,11 +3,11 @@ package com.model;
 import javax.ws.rs.QueryParam;
 
 public class Person {
-    @QueryParam("id")
+    @QueryParam("personId")
     private int id;
-    @QueryParam("name")
+    @QueryParam("personName")
     private String name;
-    @QueryParam("surname")
+    @QueryParam("personSurname")
     private String surname;
 
     @Override
