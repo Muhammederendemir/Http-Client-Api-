@@ -3,7 +3,7 @@ package com.dao;
 import com.model.School;
 
 public interface SchoolDAO {
-    public School getSchoolByNo(int schoolNo) throws Exception;
+    public School getSchoolByNo(int schoolNo);
 
     public void saveSchool(School school) throws Exception;
 

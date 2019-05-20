@@ -1,14 +1,11 @@
 package com.dao;
 
 import com.model.Person;
-import org.json.JSONObject;
-
-import java.util.List;
 
 public interface PersonDAO {
     void savePerson(Person person) throws Exception;
 
-    Person getPersonById(int id) throws Exception;
+    Person getPersonById(int id);
 
     void updatePerson(Person person) throws Exception;
 

@@ -3,7 +3,7 @@ package com.service;
 import com.model.School;
 
 public interface SchoolService {
-    School findSchool(int schoolNo) throws Exception;//private olacaka
+    School findSchool(int schoolNo);//private olacaka
 
     void createSchool(School school) throws Exception;
 

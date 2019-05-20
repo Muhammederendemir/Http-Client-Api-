@@ -3,7 +3,7 @@ package com.service;
 import com.model.Person;
 
 public interface PersonService {
-    Person findPerson(int id) throws Exception;//private olacaka
+    Person findPerson(int id);//private olacaka
 
     void createPerson(Person person) throws Exception;
 

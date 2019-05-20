@@ -7,7 +7,7 @@ import com.model.School;
 public class SchoolServiceImpl implements SchoolService {
     SchoolDAO schoolDAO = new SchoolDAOImpl();
 
-    public School findSchool(int schoolNo) throws Exception {
+    public School findSchool(int schoolNo) {
         return schoolDAO.getSchoolByNo(schoolNo);
     }
 

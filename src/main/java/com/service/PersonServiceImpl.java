@@ -4,12 +4,10 @@ import com.dao.PersonDAO;
 import com.dao.PersonDAOImpl;
 import com.model.Person;
 
-import java.util.List;
-
 public class PersonServiceImpl implements PersonService {
     PersonDAO personDAO = new PersonDAOImpl();
 
-    public Person findPerson(int id) throws Exception {
+    public Person findPerson(int id) {
         return personDAO.getPersonById(id);
     }
 

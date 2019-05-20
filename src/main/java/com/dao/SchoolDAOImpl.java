@@ -93,21 +93,26 @@ public class SchoolDAOImpl implements SchoolDAO {
         //sendString = "islem basarili";
     }
 
-    public School getSchoolByNo(int no) throws Exception {
+    public School getSchoolByNo(int no) {
         //List<Person> personList=null;
-        ResultSet resultSet = executeQuery(GET_SCHOOL_NO, no);
-        School school = new School();
-        Country country = new Country();
-        while (resultSet.next()) {
-            //Person person = new Person();
-            school.setSchoolNo(resultSet.getInt("schoolNo"));
-            school.setSchoolName(resultSet.getString("schoolName"));
-            school.setCountryNo(resultSet.getInt("countryNo"));
-            country.setCountryName(resultSet.getString("countryName"));
-            //personList.add(person);
+        try {
+            ResultSet resultSet = executeQuery(GET_SCHOOL_NO, no);
+            School school = new School();
+            Country country = new Country();
+            while (resultSet.next()) {
+                //Person person = new Person();
+                school.setSchoolNo(resultSet.getInt("schoolNo"));
+                school.setSchoolName(resultSet.getString("schoolName"));
+                school.setCountryNo(resultSet.getInt("countryNo"));
+
+                //personList.add(person);
+                LOGGER.info("schoolGetByNo işlemi başarılı olarak çalıştı");
+                return school;
+            }
+        } catch (Exception e) {
+            LOGGER.error("schoolGetByNo işlemi calışırken bir hata meydana geldi");
         }
-        LOGGER.info("schoolGetByNo işlemi başarılı olarak çalıştı");
-        return school;
+        return null;
     }
 
     public void updateSchool(School school) throws Exception {

@@ -94,7 +94,8 @@ public class PersonDAOImpl implements PersonDAO {
         //sendString = "islem basarili";
     }
 
-    public Person getPersonById(int id) throws Exception {
+    public Person getPersonById(int id) {
+        try {
             //List<Person> personList=null;
             ResultSet resultSet = executeQuery(GET_PERSON_ID, id);
             Person person = new Person();
@@ -105,8 +106,12 @@ public class PersonDAOImpl implements PersonDAO {
                 person.setSurname(resultSet.getString("personSurname"));
                 //personList.add(person);
             }
-        LOGGER.info("personGetById işlemi başarılı olarak çalıştı");
+            LOGGER.info("personGetById işlemi başarılı olarak çalıştı");
             return person;
+        } catch (Exception e) {
+            LOGGER.error("getPersonId işleminde bir hata meydana geldi");
+        }
+        return null;
     }
 
     public void updatePerson(Person person) throws Exception {
