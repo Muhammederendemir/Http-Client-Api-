@@ -1,13 +1,11 @@
 package com.model;
 
-import javax.ws.rs.QueryParam;
-
 public class Person {
-    @QueryParam("personId")
+    // @QueryParam("personId")
     private int id;
-    @QueryParam("personName")
+    // @QueryParam("personName")
     private String name;
-    @QueryParam("personSurname")
+    // @QueryParam("personSurname")
     private String surname;
 
     @Override

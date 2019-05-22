@@ -1,13 +1,11 @@
 package com.model;
 
-import javax.ws.rs.QueryParam;
-
 public class School {
-    @QueryParam("schoolNo")
+    //  @QueryParam("schoolNo")
     private int schoolNo;
-    @QueryParam("schoolName")
+    //  @QueryParam("schoolName")
     private String schoolName;
-    @QueryParam("countryNo")
+    //  @QueryParam("countryNo")
     private int countryNo;
 
     @Override

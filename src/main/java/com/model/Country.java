@@ -1,13 +1,11 @@
 package com.model;
 
-import javax.ws.rs.QueryParam;
-
 public class Country {
-    @QueryParam("countryNo")
+    //  @QueryParam("countryNo")
     private int countryNo;
-    @QueryParam("countryName")
+    // @QueryParam("countryName")
     private String countryName;
-    @QueryParam("countryLanguage")
+    // @QueryParam("countryLanguage")
     private String countryLanguage;
 
     @Override

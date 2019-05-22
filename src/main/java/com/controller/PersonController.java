@@ -15,8 +15,8 @@ public class PersonController {
 
     @POST
     @Path("/personCrud")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response savePerson(@BeanParam Person person) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response savePerson(Person person) {
         try {
             personService.createPerson(person);
             return Response.status(201).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person eklenmiştir.").build();
@@ -24,12 +24,17 @@ public class PersonController {
             return Response.status(501).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person eklenememiştir.").build();
         }
     }
-    //POST  olarak http://localhost:8090/msg/personService/personCrud?personId=4&personName=isim&personSurname=soyisim
+    //POST  olarak http://localhost:8090/msg/personService/personCrud
+    // Postmanda body kısmında
+    //Json ise ornekteki gibi doldurulacaktır
+    // {"id":321,
+    // "name":"Muhammed",
+    // "surname":"Demir"}
+
 
     @GET
     @Path("/personCrud")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response getPersonById(@QueryParam("personId") int personId) throws PersonNotFoundException {
         Person personList = null;
 
@@ -45,9 +50,8 @@ public class PersonController {
 
     @PUT
     @Path("/personCrud")
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePerson(@BeanParam Person person) {
+    public Response updatePerson(Person person) {
         try {
             personService.updatePerson(person);
             return Response.status(200).entity("personId= " + person.getId() + "\n personName= " + person.getName() + "\n personSurname =" + person.getSurname() + "\n bilgilere sahip bir person güncellenmistir.").build();
@@ -55,12 +59,16 @@ public class PersonController {
             return Response.status(501).entity("personId= " + person.getId() + "\n personName= " + person.getName() + "\n personSurname =" + person.getSurname() + "\n bilgilere sahip bir person güncellenememiştir.").build();
         }
     }
-    //PUT   //POST  olarak http://localhost:8090/msg/personService/personCrud?personId=4&personName=isim&personSurname=soyisim
+    //PUT   //POST  olarak http://localhost:8090/msg/personService/personCrud
+    // Postmanda body kısmında
+    //Json ise ornekteki gibi doldurulacaktır
+    // {"id":321,
+    // "name":"Muhammed",
+    // "surname":"Demir"}
 
     @DELETE
     @Path("/personCrud")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response deletePersonById(@QueryParam("PersonId") int personId) {
         try {
             personService.deletePerson(personId);

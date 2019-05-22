@@ -14,9 +14,8 @@ public class SchoolController {
 
     @POST
     @Path("/schoolCrud")
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response saveSchool(@BeanParam School school) {
+    public Response saveSchool(School school) {
         try {
             schoolService.createSchool(school);
             return Response.status(201).entity(" schoolNo= " + school.getSchoolNo() + "\n schoolname= " + school.getSchoolName() + "\n countryNo= " + school.getCountryNo() + "\n bilgilere sahip bir school eklenmiştir.").build();
@@ -25,11 +24,15 @@ public class SchoolController {
         }
     }
     //POST  olarak http://localhost:8090/msg/schoolService/schoolCrud?schoolNo=4&schoolName=isim&countryNo=1
+    // Postmanda body kısmında
+    //Json ise ornekteki gibi doldurulacaktır
+    // {"schoolNo":21,
+    // "schoolName":"SMYO",
+    // "countryNo":1}
 
     @GET
     @Path("/schoolCrud")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response getSchoolByNo(@QueryParam("schoolNo") int schoolNo) throws SchoolNotFoundException {
         School school = null;
 
@@ -44,9 +47,8 @@ public class SchoolController {
 
     @PUT
     @Path("/schoolCrud")
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateSchool(@BeanParam School school) {
+    public Response updateSchool(School school) {
         try {
             schoolService.updateSchool(school);
             return Response.status(200).entity(" schoolNo= " + school.getSchoolNo() + "\n schoolname= " + school.getSchoolName() + "\n countryNo= " + school.getCountryNo() + "\n bilgilere sahip bir person güncellenmistir.").build();
@@ -55,12 +57,15 @@ public class SchoolController {
         }
 
     }
-
     //PUT  olarak http://localhost:8090/msg/schoolService/schoolCrud?schoolNo=4&schoolName=isim&countryNo=1
+    // Postmanda body kısmında
+    //Json ise ornekteki gibi doldurulacaktır
+    // {"id":321,
+    // "name":"Muhammed",
+    // "surname":"Demir"}
+
     @DELETE
     @Path("/schoolCrud")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteSchoolByNo(@QueryParam("schoolNo") int schoolNo) {
         try {
             schoolService.deleteSchool(schoolNo);
