@@ -19,9 +19,9 @@ public class PersonController {
     public Response savePerson(Person person) {
         try {
             personService.createPerson(person);
-            return Response.status(201).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person eklenmiştir.").build();
+            return Response.status(201).entity(person.toString() + "\n bilgilere sahip bir person eklenmiştir.").build();
         } catch (Exception e) {
-            return Response.status(501).entity("id= " + person.getId() + "\n name= " + person.getName() + "\n surname =" + person.getSurname() + "\n bilgilere sahip bir person eklenememiştir.").build();
+            return Response.status(501).entity(person.toString() + "\n bilgilere sahip bir person eklenememiştir.").build();
         }
     }
     //POST  olarak http://localhost:8090/msg/personService/personCrud
