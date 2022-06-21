@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <jersey.version>2.17</jersey.version>
-        <mySql.version>8.0.15</mySql.version>
+        <mySql.version>8.0.28</mySql.version>
         <javax.version>2.1</javax.version>
         <jackson.version>2.3.0</jackson.version>
         <jsonSimple.version>1.1</jsonSimple.version>
